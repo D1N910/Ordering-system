@@ -1,0 +1,52 @@
+.dingdan_item {
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0;
+}
+.show{
+    transition: all 500ms;
+    width: 40px;
+}
+.onshow{
+    transform: rotate(180deg);
+}
+.allcandan{
+    width: calc(100% - 64px);
+    margin: 0 auto;
+    border: 1px dashed #ffd562;
+    padding: 0 16px;
+    height: 0;
+    overflow: hidden;
+    transition: all 500ms;
+}
+.showallcandan{
+    border: 5px dashed #ffd562;
+    height: initial;
+}
+.allcandan_item{
+    display: flex;
+    justify-content: space-between;   
+    padding: 9px 0;         
+}
+.allcandan__number span{
+    color: red;
+    font-size: 18px;
+    padding: 0 8px;
+}
+.zuohao{
+    width: 50px;
+}
+.dingdan_id{
+    width: 80px;
+}
+.dingdantime{
+    width: 150px;
+}
+.dish_list_title{
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0;
+}
+.xiangqing{
+    width: 40px;
+}
