@@ -1,22 +1,45 @@
-//绑定添加事件
-for (var i = 0; i <= document.querySelectorAll('.top_add').length - 1; i++) {
+var getdish = [];
+$.ajax({
+    type: "GET",
+    url: "/api/getalldish",
+    success: function (data) {
+        getdish=data.content;
+        changecaidan();
+        console.log(data);
+    },
+    error: function (message) {
+        data = JSON.stringify(data);
+        var data = eval("(" + data + ")");
+        console.log('error' + data);
+    }
+});
+//修改菜单
+function changecaidan() {
+    document.querySelector('.dish_list').innerHTML = '<div class="dish_list_title">菜单</div>'
+    for (var i = 0; i <= getdish.length - 1; i++) {
+        document.querySelector('.dish_list').innerHTML += '<div class="dishes_item"><div class="dishes_title">' + getdish[i].dishname + '</div><div class="dishes_price">￥<span>' + getdish[i].dishprice + '</span> </div> <div class="add_dish top_add" id=' + getdish[i].id + '>+</div></div>'
+    }
+    //绑定添加事件
+    for (var i = 0; i <= document.querySelectorAll('.top_add').length - 1; i++) {
 
-    document.querySelectorAll('.top_add')[i].onclick = function () {
-        addshppingchart(this.parentNode.querySelector('.dishes_title').innerHTML, this.parentNode.querySelector('.dishes_price span').innerHTML)
-    };
-    console.log(document.querySelectorAll('.top_add')[i].parentNode.querySelector('.dishes_title').innerHTML)
+        document.querySelectorAll('.top_add')[i].onclick = function () {
+            addshppingchart(this.id, this.parentNode.querySelector('.dishes_title').innerHTML, this.parentNode.querySelector('.dishes_price span').innerHTML)
+        };
+        console.log(document.querySelectorAll('.top_add')[i].parentNode.querySelector('.dishes_title').innerHTML)
 
+    }
 }
+
 // 保存购物车的数组
 var shoppingchart = [
 ]
 
-function addshppingchart(dishname, dishprice) {
+function addshppingchart(dishid, dishname, dishprice) {
     var shoppingchartlength = shoppingchart.length;
     console.log(shoppingchartlength);
     if (shoppingchartlength == 0 && dishprice != 0) {
         shoppingchart[0] = {
-            id: 0,
+            id: dishid,
             name: dishname,
             price: dishprice,
             numberofcopies: 1
@@ -46,7 +69,7 @@ function addshppingchart(dishname, dishprice) {
             }
         }
         shoppingchart[shoppingchartlength] = {
-            id: shoppingchartlength,
+            id: dishid,
             name: dishname,
             price: dishprice,
             numberofcopies: 1
@@ -99,7 +122,7 @@ function changegouwuche(status) {
     if (status) {
         document.querySelector('.button').className = 'button buttonhave';
         document.querySelector('.tijiao_dingdan').className = 'tijiao_dingdan tijiao_dingdan_canclick';
-        document.querySelector('.button img').setAttribute('src', './images/haveadd.png');
+        document.querySelector('.button img').setAttribute('src', '../static/dingcan/images/haveadd.png');
         xianshigouwuche();
         tijiaodingdan();
     } else {
@@ -108,7 +131,7 @@ function changegouwuche(status) {
         setTimeout(function () {
             document.querySelector('.button').className = 'button';
             document.querySelector('.tijiao_dingdan').className = 'tijiao_dingdan';
-            document.querySelector('.button img').setAttribute('src', './images/gouwuche.png');
+            document.querySelector('.button img').setAttribute('src', '../static/dingcan/images/gouwuche.png');
         }, 10);
         // 取消绑定    
     }
@@ -117,15 +140,15 @@ function changegouwuche(status) {
 function adddelate() {
     for (var i = 0; i <= document.querySelectorAll('.delate_dish').length - 1; i++) {
         document.querySelectorAll('.delate_dish')[i].onclick = function () {
-            addshppingchart(this.parentNode.querySelector('.editdish_title').innerHTML, 0)
+            addshppingchart(-1, this.parentNode.querySelector('.editdish_title').innerHTML, 0)
         }
     }
 }
 //购物车绑定添加方法
-function gouwuchetianjia(){
+function gouwuchetianjia() {
     for (var i = 0; i <= document.querySelectorAll('.gouwu_dish').length - 1; i++) {
         document.querySelectorAll('.gouwu_dish')[i].onclick = function () {
-            addshppingchart(this.parentNode.querySelector('.editdish_title').innerHTML, 1)
+            addshppingchart(-1, this.parentNode.querySelector('.editdish_title').innerHTML, 1)
         }
     }
 }
@@ -146,12 +169,43 @@ function xianshigouwuche() {
 //提交订单
 function tijiaodingdan() {
     document.querySelector('.tijiao_dingdan_canclick').onclick = function () {
-        alert('提交成功！');
-        shoppingchart = [];
-        changeshopping();
-        yingcanggouuche();
-        window.location="./showdindan.html"
-        return false;
+        zuowei = prompt("提交订单之前，请输入你的桌号:", "带走");
+        if (zuowei == null) {
+            alert("你取消了订单上传");
+        } else {
+            
+        
+        
+        var dingdancontent = '';
+        for (var i = 0; i <= shoppingchart.length - 1; i++) {
+            dingdancontent += shoppingchart[i].id + '_' + shoppingchart[i].numberofcopies + '#'
+        }
+        var senddata = new Object();
+        senddata.dingdancontent = dingdancontent;
+        senddata.zuowei=zuowei;
+        saveData = JSON.stringify(senddata);
+        console.log(saveData);
+        $.ajax({
+            type: "POST",
+            url: "https://www.d1n910.cn/api/createdingcan",
+            contentType: "application/json;charset=utf-8",
+            data: saveData,
+            dataType: "json",
+            success: function (data) {
+                alert('提交成功！');
+                shoppingchart = [];
+                changeshopping();
+                yingcanggouuche();
+                window.location = "./dingdan?id=" + data.id;
+                return false;
+                
+            },
+            error: function (message) {
+                console.log(message);
+            }
+        });
+
+    }
     }
 }
 // 取消点击dish冒泡

@@ -37,7 +37,7 @@ html,body{
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
-	padding:16px 0;
+	padding:8px 0;
 }
 
 .dishes_item .dishes_title,.dishes_price{
@@ -173,7 +173,7 @@ html,body{
 .editdish_list{
 	width: 100%;
 	background-color: #ffffff;
-	padding-bottom: 40px;
+	padding: 16px 0 60px 0;
 	max-height: 0;
 	overflow-y: auto;
 	transition: all 800ms;
@@ -185,8 +185,8 @@ html,body{
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
-	min-height: 45px;
-	line-height: 45px;
+	min-height: 28px;
+	line-height: 28px;
 }
 .editdish_list .editdish_item .delate_dish{
 	width: 18px;
@@ -205,7 +205,7 @@ html,body{
 	color: #222222;
 	flex-grow: 1;
 	line-height: initial;
-	padding-left: 9px;
+	padding-left: 16px;
 }
 .editdish_list .editdish_item .editdish_price{
 	color: #383838;
@@ -213,7 +213,7 @@ html,body{
 	padding-right: 18px;
 }
 .editdish_list .editdish_item .editdish_number{
-	margin:0 4px 0 0;
+	margin:0 16px 0 0;
 }
 
 /* .haomacontainer{
@@ -221,59 +221,3 @@ html,body{
 	margin: 0 auto;
 	border: 3px dotted #666666;
 } */
-.haomacontainer {
-
-	width: 50%;
-  
-	height: 180px;
-  
-	display: block;
-  
-	padding: 10px;
-  
-	position: relative;
-  
-	background: radial-gradient( transparent 0px, transparent 4px, white 4px, white );
-  
-	background-size: 20px 20px;
-  
-	background-position: -10px -10px;
-	margin:0 auto;
-
-
-  }
-  .haomacontainer div{
-	text-align: center;	  
-	font-size: 72px;
-	line-height: 180px;
-  }
-  .haomacontainer::before{
-	  content: '您的号码牌:';
-	  position: absolute;	  
-	  top: -20px;
-  }
-  .haomacontainer:after {
-  
-	content: '';
-  
-	position: absolute;
-  
-	left: 5px;
-  
-	top: 5px;
-  
-	right: 5px;
-  
-	bottom: 5px;
-  
-	box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.5);
-  
-	z-index: -1;
-  
-  }
-  footer{
-	  text-align: center;
-	  position: absolute;
-	  bottom: 16px;
-	  width: 100%;
-  }
