@@ -20,12 +20,12 @@
             <div class="login_containerIn">
                 <div class="login_containerIn_title" v-if="login">登入{{store_name}}</div>
                 <div class="login_containerIn_title" v-else>注册{{store_name}}</div>
-                <input type="text" placeholder="用户名" v-if="login">
-                <input type="text" placeholder="注册用户名" v-if="!login">
+                <input type="text" placeholder="用户名" v-if="login" v-model="login_name">
+                <input type="text" placeholder="注册用户名" v-if="!login" v-model="sign_name">
                 <input type="password" placeholder="请输入密码" v-if="login" v-model="password">
                 <input type="password" placeholder="请输入注册密码" v-if="!login" v-model="zhucepassword">
                 <input type="password" placeholder="请确认密码" v-if="!login" v-model="querenmima">
-                <div class="login_containerIn_button" v-if="login">
+                <div class="login_containerIn_button" v-if="login" @click="checkLogin">
                     登录
                 </div>
                 <div class="login_containerIn_button" v-if="!login" @click="zhuce">

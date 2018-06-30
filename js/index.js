@@ -1,3 +1,4 @@
+var s;
 var page= new Vue({
     el:'#page',
     data:{
@@ -6,6 +7,8 @@ var page= new Vue({
         store_name:'D记豆花甜品',
         showlogin:true,
         login:true,
+        login_name:'',
+        sign_name:'',
         // 注册密码
         zhucepassword:'',
         querenmima:'',
@@ -19,14 +22,36 @@ var page= new Vue({
         sign:function(){
             this.login=!this.login;
         },
-        zhuce:function(){
-            if(this.zhucepassword!=this.querenmima){
-                this.storeError('发生错误：两次密码不相同!');
+        // 检查登录
+        checkLogin:function(){
+            if(this.login_name== 0 || this.login_name.match(/^\s+$/g)){
+                this.promptShow('发生错误：用户名不能为空!');
+                return false;
+            }
+            if(this.password== 0 || this.password.match(/^\s+$/g)){
+                this.promptShow('发生错误：密码不能为空!');
+                return false;
             }
         },
-        storeError:function(text){
+        zhuce:function(){
+            if(this.sign_name== 0 || this.sign_name.match(/^\s+$/g)){
+                this.promptShow('发生错误：用户名不能为空!');
+                return false;
+            }
+            if(this.zhucepassword== 0 || this.zhucepassword.match(/^\s+$/g)){
+                this.promptShow('发生错误：两次密码不相同!');
+                return false;
+            }
+            if(this.zhucepassword!=this.querenmima){
+                this.promptShow('发生错误：两次密码不相同!');
+                return false;
+            }
+        },
+        promptShow:function(text){
+            clearTimeout(s);
             this.prompt=true;
             this.prompt_text=text;
+            s=setTimeout(()=>this.prompt=false,1400);
         }
     }
 })
@@ -54,7 +79,6 @@ function changecaidan() {
     }
     //绑定添加事件
     for (var i = 0; i <= document.querySelectorAll('.top_add').length - 1; i++) {
-
         document.querySelectorAll('.top_add')[i].onclick = function () {
             addshppingchart(this.id, this.parentNode.querySelector('.dishes_title').innerHTML, this.parentNode.querySelector('.dishes_price span').innerHTML)
         };
