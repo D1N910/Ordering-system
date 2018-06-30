@@ -1,3 +1,32 @@
+var page= new Vue({
+    el:'#page',
+    data:{
+        store_name:'D记豆花甜品',
+        showlogin:true,
+        login:true,
+        // 注册密码
+        zhucepassword:'',
+        querenmima:'',
+        password:''
+    },
+    methods:{
+        showcontainer:function(){
+            this.showlogin=!this.showlogin;
+        },
+        sign:function(){
+            this.login=!this.login;
+        },
+        zhuce:function(){
+            if(this.zhucepassword!=this.querenmima){
+                this.storeError('两次密码不相同');
+            }
+        },
+        storeError:function(text){
+            alert('抱歉,'+text);
+        }
+    }
+})
+
 var getdish = [];
 $.ajax({
     type: "GET",

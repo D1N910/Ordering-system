@@ -8,35 +8,75 @@
     <link rel="stylesheet" href="./style/animate.css">
     <link rel="stylesheet" href="./style/index.css">
     <title>D记豆花甜品</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 </head>
 
 <body>
-    <div id="container">
-        <div class="header">
-            D记豆花甜品
-        </div>
-        <div class="dish_list">
-            <div class="dish_list_title">
-                菜单
+    <div id="page">
+        <div class="login_container">
+            <div class="login_containerIn">
+                    <div class="login_containerIn_title" v-if="login">登入{{store_name}}</div>
+                    <div class="login_containerIn_title" v-else>注册{{store_name}}</div>
+                    <input type="text" placeholder="请输入用户名" v-if="login">
+                    <input type="text" placeholder="请输入注册用户名" v-if="!login">
+                    <input type="password" placeholder="请输入密码" v-if="login" v-model="password">
+                    <input type="password" placeholder="请输入注册密码" v-if="!login" v-model="zhucepassword">
+                    <input type="password" placeholder="请确认密码" v-if="!login" v-model="querenmima">
+                    <div class="login_containerIn_button"  v-if="login">
+                        登录
+                    </div>
+                    <div class="login_containerIn_button"  v-if="!login" @click="zhuce">
+                            注册
+                        </div>
+                    <div class="login_containerIn_sign" @click="sign" v-if="login">
+                        没有账号，点此注册
+                    </div>
+                    <div class="login_containerIn_sign" @click="sign" v-else>
+                            返回登录
+                        </div>
             </div>
         </div>
-        <!-- 底部购物车 -->
-        <div class="gouwuche">
-            <div class="button">
-                <img src="./images/gouwuche.png" alt="">
-                <div class="dish_number">1</div>
+        <div class="login" id="login" v-if="showlogin">
+            <div class="store_name">
+                {{store_name}}
             </div>
-            <div class="total_price">￥
-                <span>0</span>
+            <div class="login_button" @click='showcontainer'>
+                临时顾客
             </div>
-            <div class="tijiao_dingdan">提交订单</div>
+            <div class="login_button">
+                顾客登录
+            </div>
         </div>
-        <div class="editdish_list_container">
-            <div class="editdish_list_container_title">
-                <img src="./images/delate.png" alt="">
-                <span>清空购物车</span>
+        <div id="container" v-else>
+            <div class="header">
+                {{store_name}}
+                <div class="container_login">
+                    登录后享受更多权益
+                </div>
             </div>
-            <div class="editdish_list">
+            <div class="dish_list">
+                <div class="dish_list_title">
+                    菜单
+                </div>
+            </div>
+            <!-- 底部购物车 -->
+            <div class="gouwuche">
+                <div class="button">
+                    <img src="./images/gouwuche.png" alt="">
+                    <div class="dish_number">1</div>
+                </div>
+                <div class="total_price">￥
+                    <span>0</span>
+                </div>
+                <div class="tijiao_dingdan">提交订单</div>
+            </div>
+            <div class="editdish_list_container">
+                <div class="editdish_list_container_title">
+                    <img src="./images/delate.png" alt="">
+                    <span>清空购物车</span>
+                </div>
+                <div class="editdish_list">
+                </div>
             </div>
         </div>
     </div>
