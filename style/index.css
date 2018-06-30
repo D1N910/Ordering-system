@@ -7,6 +7,30 @@ html,body{
 }
 #page{
 	height: 100vh;
+	position: relative;
+}
+/* 提示 */
+.prompt{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	text-align: center;
+	background: #fff;
+	width: 100%;
+	z-index: 99999;
+	box-shadow: 0px 3px 2px rgba( 0, 0, 0, 0.3);
+	color: #ffca60;
+}
+.slide-fade-enter-active {
+	transition: all .3s ease;
+}
+.slide-fade-leave-active {
+	transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active for below version 2.1.8 */ {
+	transform: translateY(-10px);
+	opacity: 0;
 }
 /* 登录系统 */
 /* 登录系统容器 */
@@ -86,7 +110,10 @@ html,body{
 	height: 30px;
 	outline: 0px;
 	font-size: 18px;
-	text-indent: 24px;
+	border: 2px solid #ededed;
+	width: calc(100% - 24px);
+	padding: 4px;
+	margin: 4px 8px;
 }
 .login_containerIn_button{
 	color: #ffca60;

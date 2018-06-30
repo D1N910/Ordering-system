@@ -1,13 +1,16 @@
 var page= new Vue({
     el:'#page',
     data:{
+        // 提示框status
+        prompt:false,
         store_name:'D记豆花甜品',
         showlogin:true,
         login:true,
         // 注册密码
         zhucepassword:'',
         querenmima:'',
-        password:''
+        password:'',
+        prompt_text:''
     },
     methods:{
         showcontainer:function(){
@@ -18,11 +21,12 @@ var page= new Vue({
         },
         zhuce:function(){
             if(this.zhucepassword!=this.querenmima){
-                this.storeError('两次密码不相同');
+                this.storeError('发生错误：两次密码不相同!');
             }
         },
         storeError:function(text){
-            alert('抱歉,'+text);
+            this.prompt=true;
+            this.prompt_text=text;
         }
     }
 })

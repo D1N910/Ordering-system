@@ -13,27 +13,30 @@
 
 <body>
     <div id="page">
+        <transition name="slide-fade">
+            <p v-show="prompt" class="prompt">{{prompt_text}}</p>
+        </transition>
         <div class="login_container">
             <div class="login_containerIn">
-                    <div class="login_containerIn_title" v-if="login">登入{{store_name}}</div>
-                    <div class="login_containerIn_title" v-else>注册{{store_name}}</div>
-                    <input type="text" placeholder="请输入用户名" v-if="login">
-                    <input type="text" placeholder="请输入注册用户名" v-if="!login">
-                    <input type="password" placeholder="请输入密码" v-if="login" v-model="password">
-                    <input type="password" placeholder="请输入注册密码" v-if="!login" v-model="zhucepassword">
-                    <input type="password" placeholder="请确认密码" v-if="!login" v-model="querenmima">
-                    <div class="login_containerIn_button"  v-if="login">
-                        登录
-                    </div>
-                    <div class="login_containerIn_button"  v-if="!login" @click="zhuce">
-                            注册
-                        </div>
-                    <div class="login_containerIn_sign" @click="sign" v-if="login">
-                        没有账号，点此注册
-                    </div>
-                    <div class="login_containerIn_sign" @click="sign" v-else>
-                            返回登录
-                        </div>
+                <div class="login_containerIn_title" v-if="login">登入{{store_name}}</div>
+                <div class="login_containerIn_title" v-else>注册{{store_name}}</div>
+                <input type="text" placeholder="用户名" v-if="login">
+                <input type="text" placeholder="注册用户名" v-if="!login">
+                <input type="password" placeholder="请输入密码" v-if="login" v-model="password">
+                <input type="password" placeholder="请输入注册密码" v-if="!login" v-model="zhucepassword">
+                <input type="password" placeholder="请确认密码" v-if="!login" v-model="querenmima">
+                <div class="login_containerIn_button" v-if="login">
+                    登录
+                </div>
+                <div class="login_containerIn_button" v-if="!login" @click="zhuce">
+                    注册
+                </div>
+                <div class="login_containerIn_sign" @click="sign" v-if="login">
+                    没有账号，点此注册
+                </div>
+                <div class="login_containerIn_sign" @click="sign" v-else>
+                    返回登录
+                </div>
             </div>
         </div>
         <div class="login" id="login" v-if="showlogin">
@@ -47,7 +50,7 @@
                 顾客登录
             </div>
         </div>
-        <div id="container" v-else>
+        <div id="container" v-show='!showlogin'>
             <div class="header">
                 {{store_name}}
                 <div class="container_login">
