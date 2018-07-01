@@ -1,4 +1,5 @@
 var s;
+
 var page= new Vue({
     el:'#page',
     data:{
@@ -48,6 +49,19 @@ var page= new Vue({
                 this.promptShow('注册失败：两次密码不相同!');
                 return false;
             }
+            var userText={
+                userName:this.sign_name,
+                zhucepassword:this.zhucepassword
+            }
+            this.$http.post({
+                url:"https://www.d1n910.cn/api/getalldish",
+                method:"POST",
+                data:userText
+            }).then(function(response){
+                console.log(response);
+            },function(response){
+                console.log(response);
+            })
         },
         promptShow:function(text){
             clearTimeout(s);
