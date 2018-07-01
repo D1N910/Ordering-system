@@ -6,7 +6,7 @@ function changedingdan() {
     var locid=locationhref.split('?')[1].split('=')[1];
     $.ajax({
         type: "GET",
-        url: "/api/searchusrdish?id="+locid,
+        url: "https://www.d1n910.cn/api/searchusrdish?id="+locid,
         success: function (data) {
             var getdata=data.returnproducts[0];
             console.log(data);
@@ -48,7 +48,7 @@ function changedingdan() {
 var getdish = [];
 $.ajax({
     type: "GET",
-    url: "/api/getalldish",
+    url: "https://www.d1n910.cn/api/getalldish",
     success: function (data) {
         getdish=data.content;
         changedingdan();

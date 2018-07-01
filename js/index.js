@@ -59,7 +59,7 @@ var page= new Vue({
 var getdish = [];
 $.ajax({
     type: "GET",
-    url: "/api/getalldish",
+    url: "https://www.d1n910.cn/api/getalldish",
     success: function (data) {
         getdish=data.content;
         changecaidan();
