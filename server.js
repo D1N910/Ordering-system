@@ -3,8 +3,6 @@ var http = require('http'); //引入http模块
 var fs = require('fs'); //引入fs模块
 var url = require('url');//引入url模块
 var path = require('path');//引入path模块
-var Vue= require('vue');
-var VueResource = require('vue-resource');
 
 // req : 从浏览器带来的请求信息
 // res : 从服务器返回给浏览器的信息

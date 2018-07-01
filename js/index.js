@@ -1,8 +1,9 @@
 var s;
-
 var page= new Vue({
     el:'#page',
     data:{
+        userId:'',
+        usedenglu:'',
         // 提示框status
         prompt:false,
         store_name:'D记豆花甜品',
@@ -27,6 +28,7 @@ var page= new Vue({
         },
         // 检查登录
         checkLogin:function(){
+            var _this=this;
             if(this.login_name== 0 || this.login_name.match(/^\s+$/g)){
                 this.promptShow('登录失败：用户名不能为空!');
                 return false;
@@ -35,8 +37,34 @@ var page= new Vue({
                 this.promptShow('登录失败：密码不能为空!');
                 return false;
             }
+            var userText = new Object();
+            userText.userName = this.login_name;
+            userText.zhucepassword=this.password;
+            userText = JSON.stringify(userText);
+            
+            $.ajax({
+                type: "POST",
+                url: "https://www.d1n910.cn/api/dingcanlogin",
+                contentType: "application/json;charset=utf-8",
+                data: userText,
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    _this.promptShow(data.word);
+                    if(data.state){
+                        _this.userId=data.id;
+                        _this.usedenglu=data.username;
+                        _this.showlogin_container=false;
+                        _this.showlogin=false;
+                    }
+                },
+                error: function (message) {
+                    console.log(message);
+                }
+            });
         },
         zhuce:function(){
+            var _this=this;
             if(this.sign_name== 0 || this.sign_name.match(/^\s+$/g)){
                 this.promptShow('注册失败：用户名不能为空!');
                 return false;
@@ -49,19 +77,32 @@ var page= new Vue({
                 this.promptShow('注册失败：两次密码不相同!');
                 return false;
             }
-            var userText={
-                userName:this.sign_name,
-                zhucepassword:this.zhucepassword
-            }
-            this.$http.post({
-                url:"https://www.d1n910.cn/api/getalldish",
-                method:"POST",
-                data:userText
-            }).then(function(response){
-                console.log(response);
-            },function(response){
-                console.log(response);
-            })
+            var userText = new Object();
+            userText.userName = this.sign_name;
+            userText.zhucepassword=this.zhucepassword;
+            userText = JSON.stringify(userText);
+            $.ajax({
+                type: "POST",
+                url: "https://www.d1n910.cn/api/dingcanzhuce",
+                contentType: "application/json;charset=utf-8",
+                data: userText,
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    _this.promptShow(data.word);
+                    // 注册成功则跳转到登录界面
+                    if(data.word=='注册成功！'){
+                        // 清除数据
+                        _this.querenmima='';
+                        _this.zhucepassword='';
+                        _this.sign_name='';
+                        _this.login=true;
+                    }
+                },
+                error: function (message) {
+                    console.log(message);
+                }
+            });
         },
         promptShow:function(text){
             clearTimeout(s);
