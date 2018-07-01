@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/D1N910/Ordering-system/issues"
   },
-  "homepage": "https://github.com/D1N910/Ordering-system#readme"
+  "homepage": "https://github.com/D1N910/Ordering-system#readme",
+  "devDependencies": {
+    "vue-resource": "^1.5.1"
+  }
 }
