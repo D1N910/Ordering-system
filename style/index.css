@@ -1,3 +1,4 @@
+@charset "UTF-8";
 *{
 	padding: 0px;
 	margin: 0px;
@@ -58,7 +59,6 @@ html,body{
 	line-height: 30px;
 	color: #ffca60;
 	margin: 16px 0 36px 0;
-	text-decoration: underline;
 }
 /* 登录按钮 */
 .login_button{
@@ -85,6 +85,7 @@ html,body{
 	align-items: center;
 	justify-content: center;
 }
+
 .login_containerIn{
 	width: calc(100% - 60px);
 	height: 300px;
@@ -125,6 +126,16 @@ html,body{
 	position: absolute;
 	right: 0px;
 	bottom: 0px;
+}
+.login-containerIn-enter-active {
+	transition: all .6s ease;
+  }
+.login-containerIn-leave-active {
+	transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+.login-containerIn-enter, .login-containerIn-leave-to
+  /* .slide-fade-leave-active for below version 2.1.8 */ {
+	opacity: 0;
 }
 .header{
 	width: 100%;

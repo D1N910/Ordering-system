@@ -13,7 +13,9 @@ var page= new Vue({
         zhucepassword:'',
         querenmima:'',
         password:'',
-        prompt_text:''
+        prompt_text:'',
+        // 显示登入层
+        showlogin_container:false
     },
     methods:{
         showcontainer:function(){
@@ -25,25 +27,25 @@ var page= new Vue({
         // 检查登录
         checkLogin:function(){
             if(this.login_name== 0 || this.login_name.match(/^\s+$/g)){
-                this.promptShow('发生错误：用户名不能为空!');
+                this.promptShow('登录失败：用户名不能为空!');
                 return false;
             }
             if(this.password== 0 || this.password.match(/^\s+$/g)){
-                this.promptShow('发生错误：密码不能为空!');
+                this.promptShow('登录失败：密码不能为空!');
                 return false;
             }
         },
         zhuce:function(){
             if(this.sign_name== 0 || this.sign_name.match(/^\s+$/g)){
-                this.promptShow('发生错误：用户名不能为空!');
+                this.promptShow('注册失败：用户名不能为空!');
                 return false;
             }
             if(this.zhucepassword== 0 || this.zhucepassword.match(/^\s+$/g)){
-                this.promptShow('发生错误：两次密码不相同!');
+                this.promptShow('注册失败：两次密码不相同!');
                 return false;
             }
             if(this.zhucepassword!=this.querenmima){
-                this.promptShow('发生错误：两次密码不相同!');
+                this.promptShow('注册失败：两次密码不相同!');
                 return false;
             }
         },

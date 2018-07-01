@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="./style/animate.css">
-    <link rel="stylesheet" href="./style/index.css">
+    <link rel="stylesheet" href="./style/animate.css" charset="UTF-8">
+    <link rel="stylesheet" href="./style/index.css" charset="UTF-8">
     <title>D记豆花甜品</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 </head>
@@ -16,44 +16,46 @@
         <transition name="slide-fade">
             <p v-show="prompt" class="prompt">{{prompt_text}}</p>
         </transition>
-        <div class="login_container">
-            <div class="login_containerIn">
-                <div class="login_containerIn_title" v-if="login">登入{{store_name}}</div>
-                <div class="login_containerIn_title" v-else>注册{{store_name}}</div>
-                <input type="text" placeholder="用户名" v-if="login" v-model="login_name">
-                <input type="text" placeholder="注册用户名" v-if="!login" v-model="sign_name">
-                <input type="password" placeholder="请输入密码" v-if="login" v-model="password">
-                <input type="password" placeholder="请输入注册密码" v-if="!login" v-model="zhucepassword">
-                <input type="password" placeholder="请确认密码" v-if="!login" v-model="querenmima">
-                <div class="login_containerIn_button" v-if="login" @click="checkLogin">
-                    登录
+        <div class="login_container" v-show="showlogin_container" @click="showlogin_container=false;">
+            <transition name="login-containerIn">
+                <div class="login_containerIn" v-show="showlogin_container" @click.stop>
+                    <div class="login_containerIn_title" v-if="login">登入{{store_name}}</div>
+                    <div class="login_containerIn_title" v-else>注册{{store_name}}</div>
+                    <input type="text" placeholder="用户名" v-if="login" v-model="login_name">
+                    <input type="text" placeholder="注册用户名" v-if="!login" v-model="sign_name">
+                    <input type="password" placeholder="请输入密码" v-if="login" v-model="password">
+                    <input type="password" placeholder="请输入注册密码" v-if="!login" v-model="zhucepassword">
+                    <input type="password" placeholder="请确认密码" v-if="!login" v-model="querenmima">
+                    <div class="login_containerIn_button" v-if="login" @click="checkLogin">
+                        登录
+                    </div>
+                    <div class="login_containerIn_button" v-if="!login" @click="zhuce">
+                        注册
+                    </div>
+                    <div class="login_containerIn_sign" @click.stop="sign" v-if="login">
+                        没有账号，点此注册
+                    </div>
+                    <div class="login_containerIn_sign" @click.stop="sign" v-else>
+                        返回登录
+                    </div>
                 </div>
-                <div class="login_containerIn_button" v-if="!login" @click="zhuce">
-                    注册
-                </div>
-                <div class="login_containerIn_sign" @click="sign" v-if="login">
-                    没有账号，点此注册
-                </div>
-                <div class="login_containerIn_sign" @click="sign" v-else>
-                    返回登录
-                </div>
-            </div>
+            </transition>
         </div>
         <div class="login" id="login" v-if="showlogin">
             <div class="store_name">
                 {{store_name}}
             </div>
             <div class="login_button" @click='showcontainer'>
-                临时顾客
+                    临时顾客
             </div>
-            <div class="login_button">
+            <div class="login_button" @click.stop="showlogin_container=true;">
                 顾客登录
             </div>
         </div>
         <div id="container" v-show='!showlogin'>
             <div class="header">
                 {{store_name}}
-                <div class="container_login">
+                <div class="container_login" @click="showlogin_container=true;">
                     登录后享受更多权益
                 </div>
             </div>
