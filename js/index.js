@@ -1,47 +1,75 @@
 var s;
-var page= new Vue({
-    el:'#page',
-    data:{
-        userId:'',
-        usedenglu:'',
+var page = new Vue({
+    el: '#page',
+    data: {
+        userId: '',
+        usedenglu: '',
         // 提示框status
-        prompt:false,
-        store_name:'D记豆花甜品',
-        showlogin:true,
-        login:true,
-        login_name:'',
-        sign_name:'',
+        prompt: false,
+        store_name: '彭记豆花甜品',
+        showlogin: true,
+        login: true,
+        login_name: '',
+        sign_name: '',
         // 注册密码
-        zhucepassword:'',
-        querenmima:'',
-        password:'',
-        prompt_text:'',
+        zhucepassword: '',
+        querenmima: '',
+        password: '',
+        prompt_text: '',
         // 显示登入层
-        showlogin_container:false
+        showlogin_container: false
     },
-    methods:{
-        showcontainer:function(){
-            this.showlogin=!this.showlogin;
+    created: function () {
+        if (window.location.search != '') {
+            var se = window.location.search;
+            var seObj = {};
+            if (typeof se !== "undefined") {
+                se = se.substr(1);
+                var arr = se.split("&");
+                var newarr = [];
+                for (var i = 0; i <= arr.length - 1; i++) {
+                    newarr = arr[i].split("=");
+                    if (typeof seObj[newarr[0]] === "undefined") {
+                        seObj[newarr[0]] = newarr[1];
+                    }
+                }
+            }
+            this.showlogin_container = false;
+            this.showlogin = false;
+            this.userId=seObj.userId;
+            this.usedenglu= seObj.usedenglu;
+            this.password= seObj.password;
+            this.promptShow('顾客'+this.usedenglu+',欢迎光临！');
+        }
+    },
+    methods: {
+        // 退出登录
+        tuichu:function(){
+            window.location.href='https://www.d1n910.cn/dingcan';
+            window.history.back(-1); 
         },
-        sign:function(){
-            this.login=!this.login;
+        showcontainer: function () {
+            this.showlogin = !this.showlogin;
+        },
+        sign: function () {
+            this.login = !this.login;
         },
         // 检查登录
-        checkLogin:function(){
-            var _this=this;
-            if(this.login_name== 0 || this.login_name.match(/^\s+$/g)){
+        checkLogin: function () {
+            var _this = this;
+            if (this.login_name == 0 || this.login_name.match(/^\s+$/g)) {
                 this.promptShow('登录失败：用户名不能为空!');
                 return false;
             }
-            if(this.password== 0 || this.password.match(/^\s+$/g)){
+            if (this.password == 0 || this.password.match(/^\s+$/g)) {
                 this.promptShow('登录失败：密码不能为空!');
                 return false;
             }
             var userText = new Object();
             userText.userName = this.login_name;
-            userText.zhucepassword=this.password;
+            userText.zhucepassword = this.password;
             userText = JSON.stringify(userText);
-            
+
             $.ajax({
                 type: "POST",
                 url: "https://www.d1n910.cn/api/dingcanlogin",
@@ -51,11 +79,12 @@ var page= new Vue({
                 success: function (data) {
                     console.log(data);
                     _this.promptShow(data.word);
-                    if(data.state){
-                        _this.userId=data.id;
-                        _this.usedenglu=data.username;
-                        _this.showlogin_container=false;
-                        _this.showlogin=false;
+                    if (data.state) {
+                        _this.userId = data.id;
+                        _this.usedenglu = data.username;
+                        _this.showlogin_container = false;
+                        _this.showlogin = false;
+                        window.location.href=window.location.href+'?&userId='+_this.userId+'&usedenglu='+_this.usedenglu+'&password='+_this.password;
                     }
                 },
                 error: function (message) {
@@ -63,23 +92,23 @@ var page= new Vue({
                 }
             });
         },
-        zhuce:function(){
-            var _this=this;
-            if(this.sign_name== 0 || this.sign_name.match(/^\s+$/g)){
+        zhuce: function () {
+            var _this = this;
+            if (this.sign_name == 0 || this.sign_name.match(/^\s+$/g)) {
                 this.promptShow('注册失败：用户名不能为空!');
                 return false;
             }
-            if(this.zhucepassword== 0 || this.zhucepassword.match(/^\s+$/g)){
+            if (this.zhucepassword == 0 || this.zhucepassword.match(/^\s+$/g)) {
                 this.promptShow('注册失败：两次密码不相同!');
                 return false;
             }
-            if(this.zhucepassword!=this.querenmima){
+            if (this.zhucepassword != this.querenmima) {
                 this.promptShow('注册失败：两次密码不相同!');
                 return false;
             }
             var userText = new Object();
             userText.userName = this.sign_name;
-            userText.zhucepassword=this.zhucepassword;
+            userText.zhucepassword = this.zhucepassword;
             userText = JSON.stringify(userText);
             $.ajax({
                 type: "POST",
@@ -91,12 +120,12 @@ var page= new Vue({
                     console.log(data);
                     _this.promptShow(data.word);
                     // 注册成功则跳转到登录界面
-                    if(data.word=='注册成功！'){
+                    if (data.word == '注册成功！') {
                         // 清除数据
-                        _this.querenmima='';
-                        _this.zhucepassword='';
-                        _this.sign_name='';
-                        _this.login=true;
+                        _this.querenmima = '';
+                        _this.zhucepassword = '';
+                        _this.sign_name = '';
+                        _this.login = true;
                     }
                 },
                 error: function (message) {
@@ -104,11 +133,16 @@ var page= new Vue({
                 }
             });
         },
-        promptShow:function(text){
+        promptShow: function (text) {
             clearTimeout(s);
-            this.prompt=true;
-            this.prompt_text=text;
-            s=setTimeout(()=>this.prompt=false,1400);
+            this.prompt = true;
+            this.prompt_text = text;
+            s = setTimeout(() => this.prompt = false, 800);
+        },
+        showPeopledingdan: function () {
+            console.log('ddd');
+            console.log(window.href);
+            window.location.href = "https://www.d1n910.cn/ckdd?&userName=" + this.usedenglu + "&userPassword=" + this.password + "&userId=" + this.userId;
         }
     }
 })
@@ -118,7 +152,7 @@ $.ajax({
     type: "GET",
     url: "https://www.d1n910.cn/api/getalldish",
     success: function (data) {
-        getdish=data.content;
+        getdish = data.content;
         changecaidan();
         console.log(data);
     },
@@ -132,7 +166,9 @@ $.ajax({
 function changecaidan() {
     document.querySelector('.dish_list').innerHTML = '<div class="dish_list_title">菜单</div>'
     for (var i = 0; i <= getdish.length - 1; i++) {
-        document.querySelector('.dish_list').innerHTML += '<div class="dishes_item"><div class="dishes_title">' + getdish[i].dishname + '</div><div class="dishes_price">￥<span>' + getdish[i].dishprice + '</span> </div> <div class="add_dish top_add" id=' + getdish[i].id + '>+</div></div>'
+        if(getdish[i].show==1){
+            document.querySelector('.dish_list').innerHTML += '<div class="dishes_item"><div class="dishes_title">' + getdish[i].dishname + '</div><div class="dishes_price">￥<span>' + getdish[i].dishprice + '</span> </div> <div class="add_dish top_add" id=' + getdish[i].id + '>+</div></div>'
+        }
     }
     //绑定添加事件
     for (var i = 0; i <= document.querySelectorAll('.top_add').length - 1; i++) {
@@ -287,39 +323,40 @@ function tijiaodingdan() {
         if (zuowei == null) {
             alert("你取消了订单上传");
         } else {
-            
-        
-        
-        var dingdancontent = '';
-        for (var i = 0; i <= shoppingchart.length - 1; i++) {
-            dingdancontent += shoppingchart[i].id + '_' + shoppingchart[i].numberofcopies + '#'
-        }
-        var senddata = new Object();
-        senddata.dingdancontent = dingdancontent;
-        senddata.zuowei=zuowei;
-        saveData = JSON.stringify(senddata);
-        console.log(saveData);
-        $.ajax({
-            type: "POST",
-            url: "https://www.d1n910.cn/api/createdingcan",
-            contentType: "application/json;charset=utf-8",
-            data: saveData,
-            dataType: "json",
-            success: function (data) {
-                alert('提交成功！');
-                shoppingchart = [];
-                changeshopping();
-                yingcanggouuche();
-                window.location = "./dingdan?id=" + data.id;
-                return false;
-                
-            },
-            error: function (message) {
-                console.log(message);
-            }
-        });
 
-    }
+
+
+            var dingdancontent = '';
+            for (var i = 0; i <= shoppingchart.length - 1; i++) {
+                dingdancontent += shoppingchart[i].id + '_' + shoppingchart[i].numberofcopies + '#'
+            }
+            var senddata = new Object();
+            senddata.dingdancontent = dingdancontent;
+            senddata.zuowei = zuowei;
+            senddata.userId = page.userId;
+            saveData = JSON.stringify(senddata);
+            console.log(saveData);
+            $.ajax({
+                type: "POST",
+                url: "https://www.d1n910.cn/api/createdingcan",
+                contentType: "application/json;charset=utf-8",
+                data: saveData,
+                dataType: "json",
+                success: function (data) {
+                    alert('提交成功！');
+                    shoppingchart = [];
+                    changeshopping();
+                    yingcanggouuche();
+                    window.location = "./dingdan?id=" + data.id;
+                    return false;
+
+                },
+                error: function (message) {
+                    console.log(message);
+                }
+            });
+
+        }
     }
 }
 // 取消点击dish冒泡

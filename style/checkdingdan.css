@@ -59,3 +59,107 @@
     justify-content: space-between;
     
 }
+.zhuangxiudianpu_enter{
+    font-size: 14px;
+    text-decoration: underline;
+}
+.dianpu_textcontainer{
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dianpu_textcontainer .dianpu_text{
+    background-color: #fff;
+    width: calc(100% - 64px);
+    min-height: calc(80vh - 72px);
+    height: calc(600px - 72px);
+    border-radius: 5px;
+    position: relative;
+    padding: 36px 16px 36px 16px;
+}
+.dianpu_textcontainer .dianpu_text .delate{
+    position: absolute;
+    top: 4px;
+    right: 8px;
+}
+.dianpu_textcontainer .dianpu_text—title{
+    font-size: 18px;
+    font-weight: bold;
+    padding-top: 8px;
+}
+.dianpu_textcontainer .dianpu_storeNmae{
+    font-size: 18px;
+    outline: 0px;
+    border: 0px;
+}
+.dianpu_textcontainer .dianpu_storeNmaeedit{
+    border-bottom: 2px solid #000;
+}
+.dianpu_textcontainer .chedingalldish{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 4px;
+}
+.dianpu_textcontainer .store_dish_container{
+    height: calc(100% - 150px);
+    overflow: auto;
+}
+.dianpu_textcontainer .chedingalldish input{
+    font-size: 18px;
+    outline: 0px;
+    border: 0px;
+}
+.dianpu_textcontainer .edit input{
+    border-bottom: 2px solid #000;
+}
+.dianpu_textcontainer .chedingalldish .dish_price{
+    width: 50px;
+    text-align: right;
+}
+.zhaungxiu{
+    color: #ffd562;
+}
+.zhaungxiu_button{
+    display: flex;
+    justify-content: space-between;
+}
+.zhaungxiu_button div{
+    width: 30%;
+    text-align: center;
+    line-height: 24px;
+    height: 24px;
+}
+.zhaungxiu_button .addDish{
+    background: green;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 5px;
+}
+.zhaungxiu_button .delateDish{
+    background:rgb(248, 103, 103);
+    color: #fff;
+    font-weight: bold;
+    border-radius: 5px;
+}
+.queren_button{
+    display: flex;
+    justify-content: flex-end;
+}
+.queren_button div{
+    height: 24px;
+    line-height: 24px;
+    padding: 8px;
+    margin: 8px 8px;
+}
+.queren_button-queren{
+    color: green;
+}
+.delatedish{
+    color: red;
+}
